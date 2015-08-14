@@ -1,13 +1,13 @@
 var path = require("path");
 var fs = require("fs");
 var arg = process.argv;
-
+var wrap = '\r\n'
 var filePath = arg[2];
 var lookingForString = arg[3];
 var replaceString = arg[4];
 
 //执行函数
-recursive(filePath,repl);
+recursive(filePath,add);
 
 //计数器
 (function(){
@@ -48,7 +48,14 @@ function repl(fileName){
     data =	data.replace(lookingForString , replaceString);
 	writeFile(fileName,data)
 }
-
+//增加字符串
+function add(fileName){
+	var data = readFile(fileName);
+	var exc = new RegExp(lookingForString);
+    if(exc.test(data))
+    data =	data.replace(lookingForString , lookingForString+wrap+replaceString);
+	writeFile(fileName,data)
+}
 
 //是否是文件夹
 function isDir(fileName){
@@ -68,3 +75,4 @@ function writeFile(fileName,data){
 	if(fs.existsSync(fileName)) 
 		fs.writeFile(fileName,data)
 }
+
