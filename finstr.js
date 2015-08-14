@@ -28,7 +28,7 @@ function recursive(fileName,callback){
     if(isDir(fileName)){
         fs.readdirSync(fileName).forEach(function(val,key){
             var temp = path.join(fileName,val)
-            find(temp,callback)
+            recursive(temp,callback)
         })
     }
 }
